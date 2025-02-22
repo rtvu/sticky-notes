@@ -1,0 +1,29 @@
+{
+  "name": "sticky-notes",
+  "dockerComposeFile": "../docker/compose.yaml",
+  "service": "main",
+  "workspaceFolder": "/home/user/workspace",
+  "customizations": {
+    "vscode": {
+      "settings": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode",
+        "editor.formatOnSave": true,
+        "editor.quickSuggestions": {
+          "strings": "on"
+        },
+        "editor.tabSize": 2,
+        "files.associations": {
+          "*.css": "tailwindcss"
+        },
+        "prettier.prettierPath": "./node_modules/prettier",
+        "prettier.requireConfig": true
+      },
+      "extensions": [
+        "arturock.gitstash",
+        "bradlc.vscode-tailwindcss",
+        "dbaeumer.vscode-eslint",
+        "esbenp.prettier-vscode"
+      ]
+    }
+  }
+}
