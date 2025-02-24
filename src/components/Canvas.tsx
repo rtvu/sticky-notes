@@ -27,7 +27,11 @@ class MouseSensor extends DndMouseSensor {
         let currentElement: HTMLElement | null = event.target as HTMLElement;
 
         while (currentElement !== null) {
-          if (currentElement.dataset.disableDnd !== undefined) {
+          if (currentElement.dataset.dndDisable === "true") {
+            return false;
+          }
+
+          if (currentElement.dataset.dndDisableOnDoubleClick === "true" && event.detail === 2) {
             return false;
           }
 
@@ -74,7 +78,7 @@ export function Canvas() {
           {notes.map((note) => {
             return (
               <Draggable id={note.id} key={note.id} position={note.position} scale={scale} size={note.size}>
-                <Editor title={note.title} content={note.content} />
+                <Editor id={note.id} title={note.title} content={note.content} />
               </Draggable>
             );
           })}

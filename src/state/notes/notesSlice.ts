@@ -41,7 +41,7 @@ const notesSlice = createSlice({
           width: width,
           height: height,
         },
-        title: "Title",
+        title: "",
         content: "",
       });
     },
@@ -53,6 +53,22 @@ const notesSlice = createSlice({
         const note = notes[noteIndex];
         notes.splice(noteIndex, 1);
         notes.push(note);
+      }
+    },
+    setNoteContent: (notes, action: PayloadAction<{ id: string; content: string }>) => {
+      const { id, content } = action.payload;
+
+      const note = notes.find((note) => note.id === id);
+      if (note !== undefined) {
+        note.content = content;
+      }
+    },
+    setNoteTitle: (notes, action: PayloadAction<{ id: string; title: string }>) => {
+      const { id, title } = action.payload;
+
+      const note = notes.find((note) => note.id === id);
+      if (note !== undefined) {
+        note.title = title;
       }
     },
     updateNotePosition: (notes, action: PayloadAction<{ id: string; delta: { x: number; y: number } }>) => {
@@ -72,5 +88,5 @@ const notesSlice = createSlice({
   },
 });
 
-export const { addNewNote, moveNoteToLastIndex, updateNotePosition } = notesSlice.actions;
+export const { addNewNote, moveNoteToLastIndex, setNoteContent, setNoteTitle, updateNotePosition } = notesSlice.actions;
 export const notesReducer = notesSlice.reducer;
