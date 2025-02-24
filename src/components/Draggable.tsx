@@ -12,7 +12,6 @@ export type DraggableInfo = {
     width: number;
     height: number;
   };
-  zIndex: number;
 };
 
 export type DraggableProps = DraggableInfo & {
@@ -20,7 +19,7 @@ export type DraggableProps = DraggableInfo & {
   children: ReactNode;
 };
 
-export function Draggable({ children, id, position, scale, size, zIndex }: DraggableProps) {
+export function Draggable({ children, id, position, scale, size }: DraggableProps) {
   const { listeners, setNodeRef, transform } = useDraggable({ id });
 
   const style: CSSProperties = {
@@ -29,7 +28,6 @@ export function Draggable({ children, id, position, scale, size, zIndex }: Dragg
     left: `${position.x}px`,
     width: `${size.width}px`,
     height: `${size.height}px`,
-    zIndex: `${zIndex}`,
   };
 
   if (transform === null) {
