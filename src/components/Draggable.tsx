@@ -15,11 +15,10 @@ export type DraggableInfo = {
 };
 
 export type DraggableProps = DraggableInfo & {
-  scale: number;
   children: ReactNode;
 };
 
-export function Draggable({ children, id, position, scale, size }: DraggableProps) {
+export function Draggable({ children, id, position, size }: DraggableProps) {
   const { listeners, setNodeRef, transform } = useDraggable({ id });
 
   const style: CSSProperties = {
@@ -30,11 +29,7 @@ export function Draggable({ children, id, position, scale, size }: DraggableProp
     height: `${size.height}px`,
   };
 
-  if (transform === null) {
-    style.transform = `scale(${scale})`;
-  } else {
-    style.transform = `${CSS.Translate.toString(transform)} scale(${scale})`;
-  }
+  style.transform = CSS.Translate.toString(transform);
 
   return (
     <div ref={setNodeRef} style={style} {...listeners}>

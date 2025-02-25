@@ -3,13 +3,9 @@ import { v4 as uuid } from "uuid";
 
 import { DraggableInfo } from "../../components/Draggable";
 import { EditorProps } from "../../components/Editor";
+import { DEFAULT_NOTE_HEIGHT, DEFAULT_NOTE_WIDTH, DEFAULT_WINDOW_HEIGHT, DEFAULT_WINDOW_WIDTH } from "../../constants";
 
 export type Note = DraggableInfo & EditorProps;
-
-const DEFAULT_NOTE_WIDTH = 300;
-const DEFAULT_NOTE_HEIGHT = 400;
-const DEFAULT_WINDOW_WIDTH = 800;
-const DEFAULT_WINDOW_HEIGHT = 600;
 
 const initialState: Note[] = [];
 
@@ -25,9 +21,8 @@ const notesSlice = createSlice({
         scale,
         windowSize: { width: windowWidth, height: windowHeight },
       } = action.payload;
-
-      const width = Math.round(DEFAULT_NOTE_WIDTH * scale);
-      const height = Math.round(DEFAULT_NOTE_HEIGHT * scale);
+      const width = Math.round((DEFAULT_NOTE_WIDTH * scale) / 100);
+      const height = Math.round((DEFAULT_NOTE_HEIGHT * scale) / 100);
       const x = Math.round(((windowWidth ?? DEFAULT_WINDOW_WIDTH) - width) / 2);
       const y = Math.round(((windowHeight ?? DEFAULT_WINDOW_HEIGHT) - height) / 2);
 

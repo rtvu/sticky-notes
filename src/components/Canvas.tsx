@@ -6,12 +6,10 @@ import {
   useSensor,
   useSensors,
 } from "@dnd-kit/core";
-import { PlusIcon } from "@heroicons/react/24/outline";
-import { useWindowSize } from "@uidotdev/usehooks";
-import { Fragment, MouseEvent } from "react";
+import { MouseEvent } from "react";
 
 import { useAppDispatch, useAppSelector } from "../state/hooks";
-import { addNewNote, moveNoteToLastIndex, updateNotePosition } from "../state/notes/notesSlice";
+import { moveNoteToLastIndex, updateNotePosition } from "../state/notes/notesSlice";
 import { Draggable } from "./Draggable";
 import { Editor } from "./Editor";
 
@@ -47,16 +45,9 @@ class MouseSensor extends DndMouseSensor {
 export function Canvas() {
   const dispatch = useAppDispatch();
   const notes = useAppSelector((state) => state.notes);
-  const scale = 1;
-
-  const windowSize = useWindowSize();
 
   const mouseSensor = useSensor(MouseSensor);
   const sensors = useSensors(mouseSensor);
-
-  const onAddNewNote = () => {
-    dispatch(addNewNote({ scale, windowSize }));
-  };
 
   const onMoveNoteToLastIndex = ({ active }: DragStartEvent) => {
     dispatch(moveNoteToLastIndex(active.id as string));
@@ -67,23 +58,16 @@ export function Canvas() {
   };
 
   return (
-    <Fragment>
-      <div className="fixed bottom-[20px] z-1 flex w-screen">
-        <button className="btn btn-circle mx-auto h-[32px] w-[32px]" onClick={onAddNewNote}>
-          <PlusIcon />
-        </button>
-      </div>
-      <div className="fixed h-screen w-screen overflow-hidden">
-        <DndContext onDragStart={onMoveNoteToLastIndex} onDragEnd={onUpdateNotePosition} sensors={sensors}>
-          {notes.map((note) => {
-            return (
-              <Draggable id={note.id} key={note.id} position={note.position} scale={scale} size={note.size}>
-                <Editor id={note.id} title={note.title} content={note.content} />
-              </Draggable>
-            );
-          })}
-        </DndContext>
-      </div>
-    </Fragment>
+    <div className="fixed h-screen w-screen overflow-hidden">
+      <DndContext onDragStart={onMoveNoteToLastIndex} onDragEnd={onUpdateNotePosition} sensors={sensors}>
+        {notes.map((note) => {
+          return (
+            <Draggable id={note.id} key={note.id} position={note.position} size={note.size}>
+              <Editor id={note.id} title={note.title} content={note.content} />
+            </Draggable>
+          );
+        })}
+      </DndContext>
+    </div>
   );
 }
