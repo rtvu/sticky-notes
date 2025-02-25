@@ -1,5 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
+import { DEFAULT_THEME } from "../../constants";
+
 export type Theme = "light" | "dark";
 
 export type Settings = {
@@ -7,7 +9,7 @@ export type Settings = {
 };
 
 const initialState: Settings = {
-  theme: "light",
+  theme: DEFAULT_THEME,
 };
 
 const settingsSlice = createSlice({
