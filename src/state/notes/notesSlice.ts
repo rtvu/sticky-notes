@@ -3,13 +3,9 @@ import { v4 as uuid } from "uuid";
 
 import { DraggableInfo } from "../../components/Draggable";
 import { EditorProps } from "../../components/Editor";
+import { DEFAULT_NOTE_HEIGHT, DEFAULT_NOTE_WIDTH, DEFAULT_WINDOW_HEIGHT, DEFAULT_WINDOW_WIDTH } from "../../constants";
 
 export type Note = DraggableInfo & EditorProps;
-
-const DEFAULT_NOTE_WIDTH = 300;
-const DEFAULT_NOTE_HEIGHT = 400;
-const DEFAULT_WINDOW_WIDTH = 800;
-const DEFAULT_WINDOW_HEIGHT = 600;
 
 const initialState: Note[] = [];
 
