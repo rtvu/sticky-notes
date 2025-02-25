@@ -1,8 +1,15 @@
 import { MoonIcon, SunIcon } from "@heroicons/react/24/outline";
-import { useLocalStorage } from "@uidotdev/usehooks";
+
+import { useAppDispatch, useAppSelector } from "../state/hooks";
+import { setTheme } from "../state/settings/settingsSlice";
 
 export function Navbar() {
-  const [isDarkTheme, setIsDarkTheme] = useLocalStorage<boolean>("isDarkTheme", false);
+  const dispatch = useAppDispatch();
+  const theme = useAppSelector((state) => state.settings.theme);
+
+  const onThemeChange = () => {
+    dispatch(setTheme(theme === "light" ? "dark" : "light"));
+  };
 
   return (
     <div className="navbar bg-base-content fixed z-1 px-8 py-3">
@@ -14,8 +21,8 @@ export function Navbar() {
             type="checkbox"
             value="dark"
             className="theme-controller"
-            checked={isDarkTheme}
-            onChange={() => setIsDarkTheme(!isDarkTheme)}
+            checked={theme === "dark"}
+            onChange={onThemeChange}
           />
           <SunIcon />
           <MoonIcon />
