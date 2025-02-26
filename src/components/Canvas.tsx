@@ -45,7 +45,7 @@ class MouseSensor extends DndMouseSensor {
 export function Canvas() {
   const dispatch = useAppDispatch();
   const notes = useAppSelector((state) => state.notes);
-  const scale = 1;
+  const scale = useAppSelector((state) => state.settings.scale);
 
   const mouseSensor = useSensor(MouseSensor);
   const sensors = useSensors(mouseSensor);

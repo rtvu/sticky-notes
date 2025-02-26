@@ -15,17 +15,14 @@ const notesSlice = createSlice({
   reducers: {
     addNewNote: (
       notes,
-      action: PayloadAction<{ scale: number; windowSize: { width: number | null; height: number | null } }>,
+      action: PayloadAction<{ scale: number; windowWidth: number | null; windowHeight: number | null }>,
     ) => {
-      const {
-        scale,
-        windowSize: { width: windowWidth, height: windowHeight },
-      } = action.payload;
+      const { scale, windowWidth, windowHeight } = action.payload;
 
-      const width = Math.round(DEFAULT_NOTE_WIDTH * scale);
-      const height = Math.round(DEFAULT_NOTE_HEIGHT * scale);
-      const x = Math.round(((windowWidth ?? DEFAULT_WINDOW_WIDTH) - width) / 2);
-      const y = Math.round(((windowHeight ?? DEFAULT_WINDOW_HEIGHT) - height) / 2);
+      const width = DEFAULT_NOTE_WIDTH;
+      const height = DEFAULT_NOTE_HEIGHT;
+      const x = Math.round(((windowWidth ?? DEFAULT_WINDOW_WIDTH) - (width * scale) / 100) / 2);
+      const y = Math.round(((windowHeight ?? DEFAULT_WINDOW_HEIGHT) - (height * scale) / 100) / 2);
 
       notes.push({
         id: uuid(),
@@ -81,8 +78,26 @@ const notesSlice = createSlice({
         };
       }
     },
+    updateNoteScale: (
+      notes,
+      action: PayloadAction<{ oldScale: number; newScale: number; centerX: number; centerY: number }>,
+    ) => {
+      const { oldScale, newScale, centerX, centerY } = action.payload;
+
+      console.log({ oldScale, newScale, centerX, centerY });
+      console.log({ ...notes[0].size });
+      console.log({ ...notes[0].position });
+
+      notes.map((note) => {
+        note.position.x = Math.round((note.position.x - centerX) * (newScale / oldScale) + centerX);
+        note.position.y = Math.round((note.position.y - centerY) * (newScale / oldScale) + centerY);
+      });
+
+      console.log({ ...notes[0].position });
+    },
   },
 });
 
-export const { addNewNote, moveNoteToLastIndex, setNoteContent, setNoteTitle, updateNotePosition } = notesSlice.actions;
+export const { addNewNote, moveNoteToLastIndex, setNoteContent, setNoteTitle, updateNotePosition, updateNoteScale } =
+  notesSlice.actions;
 export const notesReducer = notesSlice.reducer;

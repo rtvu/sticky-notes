@@ -28,12 +28,13 @@ export function Draggable({ children, id, position, scale, size }: DraggableProp
     left: `${position.x}px`,
     width: `${size.width}px`,
     height: `${size.height}px`,
+    transformOrigin: "top left",
   };
 
   if (transform === null) {
-    style.transform = `scale(${scale})`;
+    style.transform = `scale(${scale / 100})`;
   } else {
-    style.transform = `${CSS.Translate.toString(transform)} scale(${scale})`;
+    style.transform = `${CSS.Translate.toString(transform)} scale(${scale / 100})`;
   }
 
   return (
